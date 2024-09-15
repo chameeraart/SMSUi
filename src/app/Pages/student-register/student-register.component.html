@@ -1,0 +1,124 @@
+<div></div>
+  <!-- Student Registration Card -->
+  <div class="card shadow-lg border-0 mb-5">
+    <div class="card-body">
+      <h2 class="card-title text-center mb-4">Student Registration</h2>
+      <form [formGroup]="Student" class="needs-validation" (ngSubmit)="submitForm()">
+        <div class="row">
+          <!-- Name -->
+          <div class="col-md-6 mb-3">
+            <label for="Name" class="form-label">Name:</label>
+            <input type="text" class="form-control" id="Name" name="Name" formControlName="Name" placeholder="Enter your name" required>
+          </div>
+          <!-- Email -->
+          <div class="col-md-6 mb-3">
+            <label for="Email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="Email" name="Email" formControlName="Email" placeholder="Enter your email" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Phone -->
+          <div class="col-md-6 mb-3">
+            <label for="Phone" class="form-label">Phone:</label>
+            <input type="text" class="form-control" id="Phone" name="Phone" formControlName="Phone" placeholder="Enter your phone number" required>
+          </div>
+          <!-- Sex -->
+          <div class="col-md-6 mb-3">
+            <label for="Sex" class="form-label">Sex:</label>
+            <select class="form-select" id="Sex" name="Sex" formControlName="Sex" required>
+              <option value="" disabled selected>Select gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- ID Number -->
+          <div class="col-md-6 mb-3">
+            <label for="IdNumber" class="form-label">ID Number:</label>
+            <input type="text" class="form-control" id="IdNumber" name="IdNumber" formControlName="IdNumber" placeholder="Enter your ID number" required>
+          </div>
+        
+          <!-- Birthday -->
+          <div class="col-md-6 mb-3">
+            <label for="Birthday" class="form-label">Birthday:</label>
+            <input type="date" class="form-control" id="Birthday" name="Birthday" formControlName="Birthday" required>
+          </div>
+        </div>
+        
+
+        
+
+        <!-- Register Button -->
+        <div class="d-flex justify-content-center">
+          <div class="d-flex justify-content-between" style="width: 40%;">
+            <button type="submit" class="btn btn-primary w-100 me-2 py-2">Register</button>
+            <button type="button" (click)="Clear()" class="btn btn-secondary w-100 py-2">Clear</button>
+          </div>
+        </div>
+        
+        
+      </form>
+    </div>
+  </div>
+
+  <!-- Student Registration Details -->
+  <div class="card shadow-lg border-0">
+    <div class="card-body">
+      <h2 class="card-title text-center mb-4">Student Registration Details</h2>
+
+      <!-- Search Box -->
+      <div class="input-group mb-3">
+        <span class="input-group-text"><i class="bi bi-search"></i></span>
+        <input type="text" class="form-control" placeholder="Search students" [(ngModel)]="searchTerm">
+      </div>
+
+      <!-- Table -->
+      <div class="table-container">
+        <table class="table table-hover table-bordered">
+          <thead class="table-light">
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Sex</th>
+              <th>ID Number</th>
+              <th>Birthday</th>
+              <th>Categoty</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let student of filterStudents() | slice: (currentPage - 1) * pageSize : currentPage * pageSize">
+              <td>{{ student.name }}</td>
+              <td>{{ student.email }}</td>
+              <td>{{ student.phone }}</td>
+              <td>{{ student.sex }}</td>
+              <td>{{ student.idNumber }}</td>
+              <td>{{ student.birthday | date:'yyyy/MM/dd' }}</td>
+              <td>{{ student.category }}</td>
+              <td>
+                <button class="btn btn-outline-primary btn-sm me-2" (click)="onEdit(student.id)">Edit</button>
+                <button class="btn btn-outline-danger btn-sm" (click)="onDelete(student.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <button class="btn btn-sm btn-outline-primary" [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)">Previous</button>
+        <span>Page {{ currentPage }} of {{ getTotalPages() }}</span>
+        <button class="btn btn-sm btn-outline-primary" [disabled]="currentPage === getTotalPages()" (click)="onPageChange(currentPage + 1)">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Buttons -->
+  <div class="bottom-buttons">
+    <button class="btn btn-secondary me-3" (click)="navigateToMainPage()">Go to Main Page</button>
+    <button class="btn btn-danger" (click)="logout()">Logout</button>
+  </div>

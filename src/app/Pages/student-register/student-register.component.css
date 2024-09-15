@@ -1,0 +1,45 @@
+/* Full screen layout adjustments */
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Make sure the content uses the full height without leaving empty space */
+  .full-screen {
+    height: 100vh; /* Instead of min-height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Ensure the card-body takes up available space */
+  .card-body {
+    flex-grow: 1;
+  }
+  
+  /* Full-screen table */
+  .table-container {
+    overflow-y: auto;
+    flex-grow: 1;
+    max-height: calc(100vh - 350px); /* Adjust according to your layout */
+  }
+  
+  /* Adjust the size of the pagination buttons */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .pagination button {
+    margin: 0 10px;
+  }
+  
+  /* Ensure the bottom buttons stay at the bottom */
+  .bottom-buttons {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  
